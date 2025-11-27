@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// Middleware untuk memverifikasi token
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -18,4 +19,21 @@ function authenticateToken(req, res, next) {
         next();
     });
 }
-module.exports = authenticateToken;
+
+// Middleware untuk membatasi akses berdasarkan peran
+function authorizeRole(requiredRole) {
+    return (req, res, next) => {
+        // req.user didapat dari authenticateToken di atas
+        if (!req.user || req.user.role !== requiredRole) {
+            return res.status(403).json({ 
+                error: `Akses ditolak. Hanya peran '${requiredRole}' yang diizinkan.` 
+            });
+        }
+        next();
+    };
+}
+
+module.exports = {
+    authenticateToken,
+    authorizeRole,
+};
