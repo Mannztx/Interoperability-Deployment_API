@@ -18,24 +18,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-// app.get('/status', (req, res) => {
-//     res.json({
-//         ok: true,
-//         service: 'film-api',
-//         time: new Date().toISOString()
-//     });
-// });
-
-// // Middleware fallback untuk menangani rute 404NotFound
-// app.use((req, res) => {
-//     res.status(404).json({ error: 'Rute tidak ditemukan' });
-// });
-
-
-//dummy data
-// app.get('/', (req, res) => {
-//     res.send('Selamat Datang di Server Node.js Tahap awal, Terimakasih');
-// });
+// dummy data
+app.get('/', (req, res) => {
+    res.send('Selamat Datang di Server API Movies & Directors (Firman Ardiansyah), Terimakasih');
+});
 
 // Cek status
 app.get('/status', (req, res) => {
